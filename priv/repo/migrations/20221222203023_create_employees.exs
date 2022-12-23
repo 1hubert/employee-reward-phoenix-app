@@ -6,8 +6,8 @@ defmodule EmployeeReward.Repo.Migrations.CreateEmployees do
       add :email, :string
       add :name, :string
       add :surname, :string
-      add :points_to_grant, :integer
-      add :points_obtained, :integer
+      add :points_to_grant, :integer, default: 0
+      add :points_obtained, :integer, default: 0
       add :password, :string
 
       timestamps()
