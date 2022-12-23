@@ -9,9 +9,9 @@ defmodule EmployeeRewardWeb.EmployeeController do
     render(conn, "index.html", employees: employees)
   end
 
-  def new(conn, _params) do
+  def register(conn, _params) do
     changeset = Roles.change_employee(%Employee{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "register.html", changeset: changeset)
   end
 
   def create(conn, %{"employee" => employee_params}) do
@@ -22,7 +22,7 @@ defmodule EmployeeRewardWeb.EmployeeController do
         |> redirect(to: Routes.employee_path(conn, :show, employee))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "register.html", changeset: changeset)
     end
   end
 

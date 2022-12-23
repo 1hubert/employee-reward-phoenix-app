@@ -19,7 +19,7 @@ defmodule EmployeeRewardWeb.Router do
 
     get "/", EmployeeController, :index
     get "/edit/:id", EmployeeController, :edit
-    get "/new", EmployeeController, :new
+    get "/register", EmployeeController, :register
     get "/employees/:id", EmployeeController, :show
     post "/register", EmployeeController, :create
     patch "/employees/:id", EmployeeController, :update
