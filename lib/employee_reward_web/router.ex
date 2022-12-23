@@ -17,8 +17,14 @@ defmodule EmployeeRewardWeb.Router do
   scope "/", EmployeeRewardWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
-     resources "/employees", EmployeeController
+    get "/", EmployeeController, :index
+    get "/edit/:id", EmployeeController, :edit
+    get "/new", EmployeeController, :new
+    get "/employees/:id", EmployeeController, :show
+    post "/register", EmployeeController, :create
+    patch "/employees/:id", EmployeeController, :update
+    put "/employees/:id", EmployeeController, :update
+    delete "/employees/:id", EmployeeController, :delete
   end
 
   # Other scopes may use custom stacks.
