@@ -1,35 +1,36 @@
 <h1>Listing Employees</h1>
 
-<table>
-  <thead>
+<table class="table table-hover">
+  <thead class="table-light">
     <tr>
-      <th>Email</th>
-      <th>Name</th>
-      <th>Surname</th>
-      <th>Points to grant</th>
-      <th>Points obtained</th>
-      <th>Password</th>
-
-      <th></th>
+      <th scope="col">#</th>
+      <th scope="col">Email</th>
+      <th scope="col">Name</th>
+      <th scope="col">Surname</th>
+      <th scope="col">Points to grant</th>
+      <th scope="col">Points obtained</th>
+      <th scope="col">Password</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-<%= for employee <- @employees do %>
+    <%= for employee <- @employees do %>
     <tr>
-      <td><%= employee.email %></td>
-      <td><%= employee.name %></td>
-      <td><%= employee.surname %></td>
-      <td><%= employee.points_to_grant %></td>
-      <td><%= employee.points_obtained %></td>
-      <td><%= employee.password %></td>
+        <th scope="row"><%= employee.id %></th>
+        <td><%= employee.email %></td>
+        <td><%= employee.name %></td>
+        <td><%= employee.surname %></td>
+        <td><%= employee.points_to_grant %></td>
+        <td><%= employee.points_obtained %></td>
+        <td><%= employee.password %></td>
 
-      <td>
-        <span><%= link "Show", to: Routes.employee_path(@conn, :show, employee) %></span>
-        <span><%= link "Edit", to: Routes.employee_path(@conn, :edit, employee) %></span>
-        <span><%= link "Delete", to: Routes.employee_path(@conn, :delete, employee), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
-    </tr>
-<% end %>
+        <td>
+          <span><%= link "Show", to: Routes.employee_path(@conn, :show, employee) %></span>
+          <span><%= link "Edit", to: Routes.employee_path(@conn, :edit, employee) %></span>
+          <span><%= link "Delete", to: Routes.employee_path(@conn, :delete, employee), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 
