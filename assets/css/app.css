@@ -1,3 +1,11 @@
 .alert:empty {
   display: none;
 }
+
+.btn-primary {
+  background-color:rgb(80, 226, 255);
+}
+
+.btn-primary:hover {
+  background-color:#87d3f9;
+}
