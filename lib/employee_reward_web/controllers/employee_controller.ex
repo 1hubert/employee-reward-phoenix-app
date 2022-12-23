@@ -18,7 +18,7 @@ defmodule EmployeeRewardWeb.EmployeeController do
     case Roles.create_employee(employee_params) do
       {:ok, employee} ->
         conn
-        |> put_flash(:info, "Employee created successfully.")
+        |> put_flash(:info, "Registered successfuly!")
         |> redirect(to: Routes.employee_path(conn, :show, employee))
 
       {:error, %Ecto.Changeset{} = changeset} ->
