@@ -3,8 +3,8 @@ defmodule EmployeeRewardWeb.EmployeeControllerTest do
 
   import EmployeeReward.RolesFixtures
 
-  @create_attrs %{email: "some email", name: "some name", password: "some password", points_obtained: 42, points_to_grant: 42, surname: "some surname"}
-  @update_attrs %{email: "some updated email", name: "some updated name", password: "some updated password", points_obtained: 43, points_to_grant: 43, surname: "some updated surname"}
+  @create_attrs %{email: "example@gmail.com", name: "John", surname: "Smith", points_obtained: 42, points_to_grant: 42, password: "12345"}
+  @update_attrs %{email: "example@protonmail.com", name: "David", surname: "Brown", points_obtained: 43, points_to_grant: 43, password: "password"}
   @invalid_attrs %{email: nil, name: nil, password: nil, points_obtained: nil, points_to_grant: nil, surname: nil}
 
   describe "index" do
@@ -16,8 +16,8 @@ defmodule EmployeeRewardWeb.EmployeeControllerTest do
 
   describe "new employee" do
     test "renders form", %{conn: conn} do
-      conn = get(conn, Routes.employee_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Employee"
+      conn = get(conn, Routes.employee_path(conn, :register))
+      assert html_response(conn, 200) =~ "Register"
     end
   end
 
@@ -34,7 +34,7 @@ defmodule EmployeeRewardWeb.EmployeeControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.employee_path(conn, :create), employee: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Employee"
+      assert html_response(conn, 200) =~ "Register"
     end
   end
 
@@ -55,7 +55,7 @@ defmodule EmployeeRewardWeb.EmployeeControllerTest do
       assert redirected_to(conn) == Routes.employee_path(conn, :show, employee)
 
       conn = get(conn, Routes.employee_path(conn, :show, employee))
-      assert html_response(conn, 200) =~ "some updated email"
+      assert html_response(conn, 200) =~ "example@protonmail.com"
     end
 
     test "renders errors when data is invalid", %{conn: conn, employee: employee} do

@@ -21,15 +21,15 @@ defmodule EmployeeReward.RolesTest do
     end
 
     test "create_employee/1 with valid data creates a employee" do
-      valid_attrs = %{email: "some email", name: "some name", password: "some password", points_obtained: 42, points_to_grant: 42, surname: "some surname"}
+      valid_attrs = %{email: "example@gmail.com", name: "John", surname: "Smith", points_obtained: 42, points_to_grant: 42, password: "12345"}
 
       assert {:ok, %Employee{} = employee} = Roles.create_employee(valid_attrs)
-      assert employee.email == "some email"
-      assert employee.name == "some name"
-      assert employee.password == "some password"
+      assert employee.email == "example@gmail.com"
+      assert employee.name == "John"
+      assert employee.surname == "Smith"
       assert employee.points_obtained == 42
       assert employee.points_to_grant == 42
-      assert employee.surname == "some surname"
+      assert employee.password == "12345"
     end
 
     test "create_employee/1 with invalid data returns error changeset" do
@@ -38,15 +38,15 @@ defmodule EmployeeReward.RolesTest do
 
     test "update_employee/2 with valid data updates the employee" do
       employee = employee_fixture()
-      update_attrs = %{email: "some updated email", name: "some updated name", password: "some updated password", points_obtained: 43, points_to_grant: 43, surname: "some updated surname"}
+      update_attrs = %{email: "example@protonmail.com", name: "David", surname: "Brown", points_obtained: 43, points_to_grant: 43, password: "password"}
 
       assert {:ok, %Employee{} = employee} = Roles.update_employee(employee, update_attrs)
-      assert employee.email == "some updated email"
-      assert employee.name == "some updated name"
-      assert employee.password == "some updated password"
+      assert employee.email == "example@protonmail.com"
+      assert employee.name == "David"
+      assert employee.surname == "Brown"
       assert employee.points_obtained == 43
       assert employee.points_to_grant == 43
-      assert employee.surname == "some updated surname"
+      assert employee.password == "password"
     end
 
     test "update_employee/2 with invalid data returns error changeset" do

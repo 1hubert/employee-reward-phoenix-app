@@ -11,12 +11,12 @@ defmodule EmployeeReward.RolesFixtures do
     {:ok, employee} =
       attrs
       |> Enum.into(%{
-        email: "some email",
-        name: "some name",
-        password: "some password",
+        email: "example@gmail.com",
+        name: "John",
+        surname: "Smith",
         points_obtained: 42,
         points_to_grant: 42,
-        surname: "some surname"
+        password: "12345"
       })
       |> EmployeeReward.Roles.create_employee()
 
