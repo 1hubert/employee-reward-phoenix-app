@@ -17,22 +17,6 @@
     <%= @employee.surname %>
   </li>
 
-  <li>
-    <strong>Points to grant:</strong>
-    <%= @employee.points_to_grant %>
-  </li>
-
-  <li>
-    <strong>Points obtained:</strong>
-    <%= @employee.points_obtained %>
-  </li>
-
-  <li>
-    <strong>Password:</strong>
-    <%= @employee.password %>
-  </li>
-
 </ul>
 
-<span><%= link "Edit", to: Routes.employee_path(@conn, :edit, @employee) %></span> |
 <span><%= link "Back", to: Routes.employee_path(@conn, :index) %></span>

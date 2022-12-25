@@ -5,3 +5,8 @@
 .invalid-feedback {
   display: block;
 }
+
+#logged-in-string {
+  color: gray;
+  margin: 5px 6px;
+}

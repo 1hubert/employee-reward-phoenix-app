@@ -1,0 +1,35 @@
+<h1>Log in</h1>
+
+<.form let={f} for={@conn} action={Routes.employee_session_path(@conn, :create)} as={:employee}>
+  <%= if @error_message do %>
+    <div class="alert alert-danger">
+      <p><%= @error_message %></p>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= label f, :email %>
+    <%= text_input f, :email, class: "form-control", required: true %>
+    <%= error_tag f, :email %>
+  </div>
+
+  <div class="mb-3">
+    <%= label f, :password %>
+    <%= password_input f, :password, class: "form-control", required: true %>
+    <%= error_tag f, :password %>
+  </div>
+
+  <div class="mb-3 form-check">
+    <%= label f, :remember_me, "Keep me logged in for 60 days", class: "form-check-label" %>
+    <%= checkbox f, :remember_me, class: "form-check-input" %>
+  </div>
+
+  <div class="mb-3">
+    <%= submit "Log in", class: "btn btn-primary" %>
+  </div>
+</.form>
+
+<p>
+  <%= link "Register", to: Routes.employee_registration_path(@conn, :new) %> |
+  <%= link "Forgot your password?", to: Routes.employee_reset_password_path(@conn, :new) %>
+</p>

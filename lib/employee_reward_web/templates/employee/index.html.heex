@@ -7,9 +7,6 @@
       <th scope="col">Email</th>
       <th scope="col">Name</th>
       <th scope="col">Surname</th>
-      <th scope="col">Points to grant</th>
-      <th scope="col">Points obtained</th>
-      <th scope="col">Password</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -20,18 +17,12 @@
         <td><%= employee.email %></td>
         <td><%= employee.name %></td>
         <td><%= employee.surname %></td>
-        <td><%= employee.points_to_grant %></td>
-        <td><%= employee.points_obtained %></td>
-        <td><%= employee.password %></td>
 
         <td>
           <span><%= link "Show", to: Routes.employee_path(@conn, :show, employee) %></span>
-          <span><%= link "Edit", to: Routes.employee_path(@conn, :edit, employee) %></span>
-          <span><%= link "Delete", to: Routes.employee_path(@conn, :delete, employee), method: :delete, data: [confirm: "Are you sure?"] %></span>
+          
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<span><%= link "New Employee", to: Routes.employee_path(@conn, :register) %></span>

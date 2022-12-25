@@ -25,11 +25,8 @@
             <a class="nav-link" href="/history">History</a>
           </div>
         </div>
-        
-        <form class="d-flex">
-          <button class="btn btn-outline-primary" type="submit">Log Out</button>
-        </form>
 
+        <%= render "_employee_menu.html", assigns %>
       </div>
     </nav>
     <%= @inner_content %>

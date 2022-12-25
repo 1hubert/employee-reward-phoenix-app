@@ -1,0 +1,11 @@
+<div class="d-flex">
+  <%= if @current_employee do %>
+    <p id="logged-in-string">Logged in as <%= @current_employee.name %> <%= @current_employee.surname %> (<%= @current_employee.email %>)</p>
+
+    <%= button "Settings", to: Routes.employee_settings_path(@conn, :edit), class: "btn btn-outline-primary", method: "get" %>
+    <%= link "Log out", to: Routes.employee_session_path(@conn, :delete), class: "btn btn-outline-primary", method: :delete %>
+  <% else %>
+    <%= link "Register", to: Routes.employee_registration_path(@conn, :new), class: "btn btn-outline-primary" %>
+    <%= link "Log in", to: Routes.employee_session_path(@conn, :new), class: "btn btn-outline-primary" %>
+  <% end %>
+</div>
