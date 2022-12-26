@@ -2,6 +2,8 @@ defmodule EmployeeReward.Accounts.Employee do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias EmployeeReward.Rewards.PointsBalance
+
   schema "employees" do
     field :email, :string
     field :password, :string, virtual: true, redact: true
@@ -9,6 +11,7 @@ defmodule EmployeeReward.Accounts.Employee do
     field :surname, :string
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+    has_one :points_balance, PointsBalance
 
     timestamps()
   end
