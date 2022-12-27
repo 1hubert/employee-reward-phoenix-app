@@ -5,8 +5,8 @@
       <p>Grant points to your co-workers for their good deeds and hard work to show your appreciation</p>
     </div>
     <div class="col border border-5" id="points">
-      <p style="text-align: right;">Points to grant: <%= @points.to_grant %></p>
-      <p style="text-align: right;">Points obtained: <%= @points.obtained %></p>
+      <p style="text-align: right;">Points to grant: <%= @employee_info.points_to_grant %></p>
+      <p style="text-align: right;">Points obtained: <%= @employee_info.points_obtained %></p>
     </div>
   </div>
 </div>
@@ -17,7 +17,6 @@
       <th scope="col">#</th>
       <th scope="col">Email</th>
       <th scope="col">Full Name</th>
-      <th scope="col">Slider</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -29,14 +28,13 @@
         <td><%= employee.name %> <%= employee.surname %></td>
 
         <td>
-          <div>
-            <input type="range" value="0" min="0" max="50" oninput="this.nextElementSibling.value = this.value">
-            <output>0</output>
-            <input type="range" class="form-range" min="0" max="50" oninput="this.nextElementSibling.value = this.value">
-            <output>0</output>
-          </div>
+          <%= form_for @conn, Routes.points_balance_path(@conn, :grant, employee.id), fn f -> %>
+            <div class="input-group mb-3" id="points_input">
+              <%= text_input f, :value, class: "form-control", placeholder: "Points" %>
+              <%= submit "Grant", class: "btn btn-outline-secondary" %>
+            </div>
+          <% end %>
         </td>
-        <td><button>Grant points</button></td>
       </tr>
     <% end %>
   </tbody>

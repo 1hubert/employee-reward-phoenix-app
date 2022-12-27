@@ -21,8 +21,10 @@ defmodule EmployeeRewardWeb.Router do
     pipe_through [:browser, :require_authenticated_employee]
 
     get "/", EmployeeController, :index
-    # get "/edit/:id", EmployeeController, :edit
     get "/show/:id", EmployeeController, :show
+    post "/grant/:to_id", PointsBalanceController, :grant
+
+    # get "/edit/:id", EmployeeController, :edit
     # patch "/employees/:id", EmployeeController, :update
     # put "/employees/:id", EmployeeController, :update
     # delete "/employees/:id", EmployeeController, :delete

@@ -7,6 +7,7 @@ defmodule EmployeeReward.Rewards do
   alias EmployeeReward.Repo
 
   alias EmployeeReward.Rewards.PointsBalance
+  alias Ecto.Multi
 
   @doc """
   Returns the list of points_balances.
@@ -104,5 +105,33 @@ defmodule EmployeeReward.Rewards do
 
   def set_points_to_grant_to_50_for_everyone() do
     Repo.update_all(PointsBalance, set: [points_to_grant: 50])
+  end
+
+  def grant_points(from_id, to_id, amount) when from_id != to_id do
+    sender_balance = Repo.get_by!(PointsBalance, [employee_id: from_id])
+    receiver_balance = Repo.get_by!(PointsBalance, [employee_id: to_id])
+
+    %{points_to_grant: old_points_to_grant} = sender_balance
+    %{points_obtained: old_obtained_points} = receiver_balance
+
+    case old_points_to_grant >= amount do
+      true ->
+        new_points_to_grant = old_points_to_grant - amount
+        new_obtained_points = old_obtained_points + amount
+
+        Multi.new()
+        |> Multi.update(:substract_points_to_grant, change_points_balance(sender_balance, %{points_to_grant: new_points_to_grant}))
+        |> Multi.update(:add_obtained_points, change_points_balance(receiver_balance, %{points_obtained: new_obtained_points}))
+        # |> Multi.run(:rewards_balance, fn _repo, %{employee: %{id: id}} ->
+        #   Rewards.create_points_balance(%{employee_id: id})
+        # end)
+        |> Repo.transaction()
+      false ->
+        {:error, "Not enough points available"}
+    end
+  end
+
+  def grant_points(from_id, to_id, _amount) when from_id == to_id do
+    {:error, "You cannot gift points to yourself!"}
   end
 end
