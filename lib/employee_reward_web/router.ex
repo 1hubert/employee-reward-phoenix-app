@@ -18,7 +18,7 @@ defmodule EmployeeRewardWeb.Router do
   end
 
   scope "/", EmployeeRewardWeb do
-    pipe_through :browser
+    pipe_through [:browser, :require_authenticated_employee]
 
     get "/", EmployeeController, :index
     # get "/edit/:id", EmployeeController, :edit
