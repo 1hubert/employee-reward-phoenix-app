@@ -81,7 +81,7 @@ defmodule EmployeeRewardWeb.EmployeeAuth do
     conn
     |> renew_session()
     |> delete_resp_cookie(@remember_me_cookie)
-    |> redirect(to: "/")
+    |> redirect(to: Routes.employee_session_path(conn, :new))
   end
 
   @doc """
