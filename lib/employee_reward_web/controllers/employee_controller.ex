@@ -14,14 +14,14 @@ defmodule EmployeeRewardWeb.EmployeeController do
       |> Repo.get!(current_employee_id)
       |> Repo.preload(:points_balance)
 
-    current_employee = %{
+    employee_info = %{
       id: current_employee.id,
       points_to_grant: current_employee.points_balance.points_to_grant,
       points_obtained: current_employee.points_balance.points_obtained
     }
 
     employees = Repo.all(Employee)
-    render(conn, "index.html", employees: employees, current_employee: current_employee)
+    render(conn, "index.html", employees: employees, employee_info: employee_info)
   end
 
   def show(conn, params, _current_employee) do
