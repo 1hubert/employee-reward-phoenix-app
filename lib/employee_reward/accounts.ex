@@ -7,6 +7,8 @@ defmodule EmployeeReward.Accounts do
   alias EmployeeReward.Repo
 
   alias EmployeeReward.Accounts.{Employee, EmployeeToken, EmployeeNotifier}
+  alias EmployeeReward.Rewards
+  alias Ecto.Multi
 
   ## Database getters
 
@@ -75,9 +77,12 @@ defmodule EmployeeReward.Accounts do
 
   """
   def register_employee(attrs) do
-    %Employee{}
-    |> Employee.registration_changeset(attrs)
-    |> Repo.insert()
+    Multi.new()
+    |> Multi.insert(:employee, Employee.registration_changeset(%Employee{}, attrs))
+    |> Multi.run(:rewards_balance, fn _repo, %{employee: %{id: id}} ->
+      Rewards.create_points_balance(%{employee_id: id})
+    end)
+    |> Repo.transaction()
   end
 
   @doc """
