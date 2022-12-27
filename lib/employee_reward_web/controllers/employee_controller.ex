@@ -8,21 +8,20 @@ defmodule EmployeeRewardWeb.EmployeeController do
     apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_employee])
   end
 
-  def index(conn, _params, current_employee) do
-     %{id: current_employee_id} = current_employee
-
-    loaded_employee =
+  def index(conn, _params, %{id: current_employee_id}) do
+    current_employee =
       Employee
       |> Repo.get!(current_employee_id)
-      |>Repo.preload(:points_balance)
+      |> Repo.preload(:points_balance)
 
-    points = %{
-      to_grant: loaded_employee.points_balance.points_to_grant,
-      obtained: loaded_employee.points_balance.points_obtained
+    current_employee = %{
+      id: current_employee.id,
+      points_to_grant: current_employee.points_balance.points_to_grant,
+      points_obtained: current_employee.points_balance.points_obtained
     }
 
     employees = Repo.all(Employee)
-    render(conn, "index.html", employees: employees, points: points)
+    render(conn, "index.html", employees: employees, current_employee: current_employee)
   end
 
   def show(conn, params, _current_employee) do
