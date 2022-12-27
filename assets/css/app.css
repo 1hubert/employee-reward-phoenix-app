@@ -10,3 +10,13 @@
   color: gray;
   margin: 5px 6px;
 }
+
+.slider.slider-horizontal{
+  width: 40px !important;
+}
+
+#points {
+  background-color: rgba(240, 255, 255, 0.548);
+  margin: 10px 12px;
+  font-weight: bold;
+}

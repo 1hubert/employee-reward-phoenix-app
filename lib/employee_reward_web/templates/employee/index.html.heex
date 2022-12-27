@@ -1,12 +1,23 @@
-<h1>Listing Employees</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-10">
+      <h1>Reward your colleagues!</h1>
+      <p>Grant points to your co-workers for their good deeds and hard work to show your appreciation</p>
+    </div>
+    <div class="col border border-5" id="points">
+      <p style="text-align: right;">Points to grant: <%= @points.to_grant %></p>
+      <p style="text-align: right;">Points obtained: <%= @points.obtained %></p>
+    </div>
+  </div>
+</div>
 
 <table class="table table-hover">
   <thead class="table-light">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Email</th>
-      <th scope="col">Name</th>
-      <th scope="col">Surname</th>
+      <th scope="col">Full Name</th>
+      <th scope="col">Slider</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -15,13 +26,17 @@
     <tr>
         <th scope="row"><%= employee.id %></th>
         <td><%= employee.email %></td>
-        <td><%= employee.name %></td>
-        <td><%= employee.surname %></td>
+        <td><%= employee.name %> <%= employee.surname %></td>
 
         <td>
-          <span><%= link "Show", to: Routes.employee_path(@conn, :show, employee) %></span>
-          
+          <div>
+            <input type="range" value="0" min="0" max="50" oninput="this.nextElementSibling.value = this.value">
+            <output>0</output>
+            <input type="range" class="form-range" min="0" max="50" oninput="this.nextElementSibling.value = this.value">
+            <output>0</output>
+          </div>
         </td>
+        <td><button>Grant points</button></td>
       </tr>
     <% end %>
   </tbody>
