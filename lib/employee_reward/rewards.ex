@@ -107,6 +107,14 @@ defmodule EmployeeReward.Rewards do
     Repo.update_all(PointsBalance, set: [points_to_grant: 50])
   end
 
+  def grant_points(_from_id, _to_id, amount) when amount < 1 do
+    {:error, "You cannot gift less than 1 point"}
+  end
+
+  def grant_points(from_id, to_id, _amount) when from_id == to_id do
+    {:error, "You cannot gift points to yourself!"}
+  end
+
   def grant_points(from_id, to_id, amount) when from_id != to_id do
     sender_balance = Repo.get_by!(PointsBalance, [employee_id: from_id])
     receiver_balance = Repo.get_by!(PointsBalance, [employee_id: to_id])
@@ -139,10 +147,6 @@ defmodule EmployeeReward.Rewards do
       false ->
         {:error, "Not enough points available"}
     end
-  end
-
-  def grant_points(from_id, to_id, _amount) when from_id == to_id do
-    {:error, "You cannot gift points to yourself!"}
   end
 
   @doc """
