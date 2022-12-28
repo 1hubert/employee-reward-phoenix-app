@@ -18,4 +18,21 @@ defmodule EmployeeReward.RewardsFixtures do
 
     points_balance
   end
+
+  @doc """
+  Generate a points_history.
+  """
+  def points_history_fixture(attrs \\ %{}) do
+    {:ok, points_history} =
+      attrs
+      |> Enum.into(%{
+        receiver: "some receiver",
+        sender: "some sender",
+        transaction_type: "some transaction_type",
+        value: 42
+      })
+      |> EmployeeReward.Rewards.create_points_history()
+
+    points_history
+  end
 end

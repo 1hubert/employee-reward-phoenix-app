@@ -1,0 +1,28 @@
+<h1>Points history</h1>
+
+<table class="table table-hover">
+  <thead class="table-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Transaction type</th>
+      <th scope="col">Value</th>
+      <th scope="col">Sender</th>
+      <th scope="col">Receiver</th>
+      <th scope="col">Date</th>
+      <th scope="col">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for points_history <- @points_history do %>
+        <tr>
+          <th scope="row"><%= points_history.id %></th>
+          <td><%= points_history.transaction_type %></td>
+          <td><%= points_history.value %></td>
+          <td><%= points_history.sender %></td>
+          <td><%= points_history.receiver %></td>
+          <td><%= points_history.inserted_at.day %>.<%= points_history.inserted_at.month %>.<%= points_history.inserted_at.year %></td>
+          <td><%= points_history.inserted_at.hour %>:<%= points_history.inserted_at.minute %>:<%= points_history.inserted_at.second %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

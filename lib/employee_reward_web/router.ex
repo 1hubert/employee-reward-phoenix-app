@@ -23,6 +23,7 @@ defmodule EmployeeRewardWeb.Router do
     get "/", EmployeeController, :index
     get "/show/:id", EmployeeController, :show
     post "/grant/:to_id", PointsBalanceController, :grant
+    get "/history", PointsHistoryController, :index
 
     # get "/edit/:id", EmployeeController, :edit
     # patch "/employees/:id", EmployeeController, :update
