@@ -1,8 +1,6 @@
 defmodule EmployeeRewardWeb.PointsBalanceController do
   use EmployeeRewardWeb, :controller
 
-  alias EmployeeReward.Repo
-  alias EmployeeReward.Rewards.PointsBalance
   alias EmployeeReward.Rewards
 
   def grant(conn, %{"to_id" => to_id, "value" => value}) do
