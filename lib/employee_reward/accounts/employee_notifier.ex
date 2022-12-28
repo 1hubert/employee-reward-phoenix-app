@@ -76,4 +76,20 @@ defmodule EmployeeReward.Accounts.EmployeeNotifier do
     ==============================
     """)
   end
+
+  @doc """
+  Notify employee that he has received points from a colleague.
+  """
+  def deliver_received_points_notification(employee, point_value, sender) do
+    deliver(employee.email, "Someone granted you points on Employee Reward App", """
+
+    ==============================
+
+    Hi #{employee.name},
+
+    #{sender.name} #{sender.surname} (#{sender.email}) has granted you #{point_value} points!
+
+    ==============================
+    """)
+  end
 end

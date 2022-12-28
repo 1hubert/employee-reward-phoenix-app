@@ -2,6 +2,9 @@ defmodule EmployeeRewardWeb.PointsBalanceController do
   use EmployeeRewardWeb, :controller
 
   alias EmployeeReward.Rewards
+  alias EmployeeReward.Accounts.EmployeeNotifier
+  alias EmployeeReward.Accounts.Employee
+  alias EmployeeReward.Repo
 
   def grant(conn, %{"to_id" => to_id, "value" => value}) do
     case Integer.parse(value) do
@@ -11,6 +14,10 @@ defmodule EmployeeRewardWeb.PointsBalanceController do
 
         case Rewards.grant_points(from_id, to_id, value) do
           {:ok, _} ->
+            sender = Repo.get!(Employee, from_id)
+            employee = Repo.get!(Employee, to_id)
+            EmployeeNotifier.deliver_received_points_notification(employee, value, sender)
+
             conn
             |> redirect(to: Routes.employee_path(conn, :index))
           {:error, message} ->
