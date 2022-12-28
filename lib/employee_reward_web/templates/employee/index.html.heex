@@ -30,7 +30,7 @@
         <td>
           <%= form_for @conn, Routes.points_balance_path(@conn, :grant, employee.id), fn f -> %>
             <div class="input-group mb-3" id="points_input">
-              <%= text_input f, :value, class: "form-control", placeholder: "Points" %>
+              <%= text_input f, :value, class: "form-control", placeholder: "Points", autocomplete: "off" %>
               <%= submit "Grant", class: "btn btn-outline-secondary" %>
             </div>
           <% end %>
