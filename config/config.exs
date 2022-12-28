@@ -13,7 +13,10 @@ config :employee_reward,
 # Configures the endpoint
 config :employee_reward, EmployeeRewardWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: EmployeeRewardWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [view: EmployeeRewardWeb.ErrorView,
+                  accepts: ~w(html json),
+                  root_layout: {EmployeeRewardWeb.LayoutView, :error},
+                  layout: {EmployeeRewardWeb.LayoutView, :skip}],
   pubsub_server: EmployeeReward.PubSub,
   live_view: [signing_salt: "sQ8myRZA"]
 
