@@ -20,7 +20,10 @@ defmodule EmployeeRewardWeb.EmployeeController do
       points_obtained: current_employee.points_balance.points_obtained
     }
 
-    employees = Repo.all(Employee)
+    employees =
+      Repo.all(Employee)
+      |> Enum.reject(fn employee -> employee.id == current_employee_id end)
+
     render(conn, "index.html", employees: employees, employee_info: employee_info)
   end
 
