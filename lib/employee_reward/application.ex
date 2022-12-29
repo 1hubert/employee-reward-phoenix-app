@@ -15,7 +15,9 @@ defmodule EmployeeReward.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: EmployeeReward.PubSub},
       # Start the Endpoint (http/https)
-      EmployeeRewardWeb.Endpoint
+      EmployeeRewardWeb.Endpoint,
+      # Call the GenServer's start_link/1 function
+      EmployeeReward.AutomatedPointsDistribution
       # Start a worker by calling: EmployeeReward.Worker.start_link(arg)
       # {EmployeeReward.Worker, arg}
     ]
