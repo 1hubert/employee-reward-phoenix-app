@@ -163,6 +163,24 @@ defmodule EmployeeReward.Rewards do
     Repo.all(from p in PointsHistory, order_by: [desc: p.id])
   end
 
+  def list_recently_given_rewards(employee_id) do
+    sender_email =
+      Repo.get!(Employee, employee_id)
+      |> Map.get(:email)
+
+    query = from p in PointsHistory,
+      where: p.transaction_type == "Grant points" and p.sender == ^sender_email,
+      select: %{
+        id: p.id,
+        value: p.value,
+        receiver: p.receiver,
+        inserted_at: p.inserted_at
+      },
+      order_by: [desc: p.id]
+
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single points_history.
 
@@ -371,6 +389,5 @@ defmodule EmployeeReward.Rewards do
       false ->
         {:error, "Not enough points available"}
     end
-
   end
 end
