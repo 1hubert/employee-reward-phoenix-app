@@ -5,6 +5,7 @@ defmodule EmployeeReward.Rewards do
 
   import Ecto.Query, warn: false
 
+  alias EmployeeReward.Accounts.{EmployeeNotifier, Employee}
   alias Ecto.Multi
   alias EmployeeReward.Repo
   alias EmployeeReward.Rewards.{PointsBalance, PointsHistory, Award}
@@ -359,6 +360,9 @@ defmodule EmployeeReward.Rewards do
           |> Map.get(:email)
 
         staff_email = "award.handling@company.com"
+        employee = Repo.get!(Employee, employee_id)
+
+        EmployeeNotifier.deliver_award_claimed_notification(staff_email, award, employee)
 
         Multi.new()
         |> Multi.update(:substract_points_obtained, change_points_balance(employee_balance, %{points_obtained: new_points_obtained}))

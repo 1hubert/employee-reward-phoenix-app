@@ -92,4 +92,18 @@ defmodule EmployeeReward.Accounts.EmployeeNotifier do
     ==============================
     """)
   end
+
+  @doc """
+  Notify company staff responsible for giving awards that an employee has successfuly claimed an award.
+  """
+  def deliver_award_claimed_notification(staff_email, award, employee) do
+    deliver(staff_email, "An award has been claimed on Employee Reward App", """
+
+    ==============================
+
+    An award with the ID of #{award.id} (#{award.award_name}) has been claimed by #{employee.name} #{employee.surname} (employee ID: #{employee.id}).
+
+    ==============================
+    """)
+  end
 end
