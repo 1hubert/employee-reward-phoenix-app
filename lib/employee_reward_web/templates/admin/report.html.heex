@@ -1,0 +1,19 @@
+<h1>Monthly Report</h1>
+<p>A summary of rewards given to each employee in <%= @month %> of <%= @year %></p>
+
+<table class="table table-hover">
+  <thead class="table-light">
+    <tr>
+      <th scope="col">Receiver</th>
+      <th scope="col">Total Points Obtained</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for employee <- @employee_points do %>
+        <tr>
+          <th scope="row"><%= employee.email %></th>
+          <td><%= employee.total_points %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
