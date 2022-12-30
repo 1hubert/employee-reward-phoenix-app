@@ -35,4 +35,19 @@ defmodule EmployeeReward.RewardsFixtures do
 
     points_history
   end
+
+  @doc """
+  Generate a award.
+  """
+  def award_fixture(attrs \\ %{}) do
+    {:ok, award} =
+      attrs
+      |> Enum.into(%{
+        award_name: "some award_name",
+        point_cost: 42
+      })
+      |> EmployeeReward.Rewards.create_award()
+
+    award
+  end
 end

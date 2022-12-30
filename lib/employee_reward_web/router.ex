@@ -22,6 +22,8 @@ defmodule EmployeeRewardWeb.Router do
 
     get "/", EmployeeController, :index
     get "/show/:id", EmployeeController, :show
+    get "/awards", AwardController, :index
+    post "/awards/claim/:award_id", AwardController, :claim
     post "/grant/:to_id", PointsBalanceController, :grant
     get "/history", PointsHistoryController, :index
 

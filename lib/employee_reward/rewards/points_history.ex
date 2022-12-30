@@ -16,7 +16,7 @@ defmodule EmployeeReward.Rewards.PointsHistory do
     points_history
     |> cast(attrs, [:sender, :receiver, :value, :transaction_type])
     |> validate_required([:sender, :receiver, :value, :transaction_type])
-    |> validate_inclusion(:transaction_type, ["Monthly points distribution", "Grant points", "Admin edit"])
+    |> validate_inclusion(:transaction_type, ["Monthly points distribution", "Grant points", "Admin edit", "Redeem award"])
     |> validate_number(:value, greater_than: 0)
   end
 end

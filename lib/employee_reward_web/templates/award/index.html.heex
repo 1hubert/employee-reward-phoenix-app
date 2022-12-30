@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row">
+      <div class="col-10">
+        <h1>Claim an award!</h1>
+        <p>Convert obtained points to various benefits</p>
+      </div>
+      <div class="col border border-5" id="points">
+        <p style="text-align: right;">Points to grant: <%= @employee_info.points_to_grant %></p>
+        <p style="text-align: right;">Points obtained: <%= @employee_info.points_obtained %></p>
+      </div>
+    </div>
+  </div>
+
+<div class="row">
+    <%= for award <- @awards do %>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><%= award.award_name %></h5>
+                    <p class="card-text"><%= award.award_description %></p>
+                    <%= form_for @conn, Routes.award_path(@conn, :claim, award.id), fn _f -> %>
+                        <%= submit class: "btn btn-primary" do %>
+                            Get for <%= award.point_cost %> points
+                        <% end %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+</div>

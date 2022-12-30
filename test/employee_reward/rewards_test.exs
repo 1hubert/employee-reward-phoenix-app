@@ -118,4 +118,60 @@ defmodule EmployeeReward.RewardsTest do
       assert %Ecto.Changeset{} = Rewards.change_points_history(points_history)
     end
   end
+
+  describe "awards" do
+    alias EmployeeReward.Rewards.Award
+
+    import EmployeeReward.RewardsFixtures
+
+    @invalid_attrs %{award_name: nil, point_cost: nil}
+
+    test "list_awards/0 returns all awards" do
+      award = award_fixture()
+      assert Rewards.list_awards() == [award]
+    end
+
+    test "get_award!/1 returns the award with given id" do
+      award = award_fixture()
+      assert Rewards.get_award!(award.id) == award
+    end
+
+    test "create_award/1 with valid data creates a award" do
+      valid_attrs = %{award_name: "some award_name", point_cost: 42}
+
+      assert {:ok, %Award{} = award} = Rewards.create_award(valid_attrs)
+      assert award.award_name == "some award_name"
+      assert award.point_cost == 42
+    end
+
+    test "create_award/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Rewards.create_award(@invalid_attrs)
+    end
+
+    test "update_award/2 with valid data updates the award" do
+      award = award_fixture()
+      update_attrs = %{award_name: "some updated award_name", point_cost: 43}
+
+      assert {:ok, %Award{} = award} = Rewards.update_award(award, update_attrs)
+      assert award.award_name == "some updated award_name"
+      assert award.point_cost == 43
+    end
+
+    test "update_award/2 with invalid data returns error changeset" do
+      award = award_fixture()
+      assert {:error, %Ecto.Changeset{}} = Rewards.update_award(award, @invalid_attrs)
+      assert award == Rewards.get_award!(award.id)
+    end
+
+    test "delete_award/1 deletes the award" do
+      award = award_fixture()
+      assert {:ok, %Award{}} = Rewards.delete_award(award)
+      assert_raise Ecto.NoResultsError, fn -> Rewards.get_award!(award.id) end
+    end
+
+    test "change_award/1 returns a award changeset" do
+      award = award_fixture()
+      assert %Ecto.Changeset{} = Rewards.change_award(award)
+    end
+  end
 end
