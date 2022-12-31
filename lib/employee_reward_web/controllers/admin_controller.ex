@@ -2,24 +2,18 @@ defmodule EmployeeRewardWeb.AdminController do
   use EmployeeRewardWeb, :controller
 
   import Ecto.Query, only: [from: 2]
+  import EmployeeRewardWeb.AdminAuth
 
   alias EmployeeReward.Rewards.PointsHistory
   alias EmployeeReward.{Repo, Rewards}
 
-  plug :check_auth
-
-  defp check_auth(conn, _args) do
-    if get_session(conn, :admin_session) do
-      conn
-    else
-      conn
-      |> put_flash(:error, "You need to be logged in as admin to access that page")
-      |> redirect(to: Routes.admin_session_path(conn, :new))
-    end
-  end
+  plug :require_authenticated_admin
 
   def index(conn, _params) do
-    text(conn, "Hello from admin index!!")
+    awards = Rewards.list_awards()
+    points_balances = Rewards.list_points_balances()
+
+    render(conn, "index.html", awards: awards, points_balances: points_balances)
   end
 
   def report(conn, %{"year" => year, "month" => month}) do
@@ -38,10 +32,6 @@ defmodule EmployeeRewardWeb.AdminController do
       Repo.all(query)
       |> group_values_by_year_month()
       |> Map.get({year, month})
-
-      IO.puts("+++")
-      IO.inspect(employee_points)
-      IO.puts("+++")
 
     render(conn, "report.html", employee_points: employee_points, year: trunc(year), month: convert_month(month))
   end
@@ -63,7 +53,7 @@ defmodule EmployeeRewardWeb.AdminController do
 #                %{{2022.0, 12.0} => %{email: "marek@gmail.com", total_points: 14}},
 #                %{{2022.0, 12.0} => %{email: "michael@gmail.com", total_points: 26}}
 #              ]
-#   iex> convert_keyword_list(list)
+#   iex> group_values_by_year_month(list)
 #   %{
 #     {2022.0, 9.0} => [
 #       %{email: "hrozmarynowski776@gmail.com", total_points: 23},
