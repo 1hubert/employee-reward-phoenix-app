@@ -36,6 +36,10 @@ defmodule EmployeeRewardWeb.Router do
   scope "/admin", EmployeeRewardWeb do
     pipe_through [:browser]
 
+    get "/log_in", AdminSessionController, :new
+    post "/log_in", AdminSessionController, :create
+    delete "/log_out", AdminSessionController, :delete
+    get "/", AdminController, :index
     get "/report", AdminController, :report
   end
 

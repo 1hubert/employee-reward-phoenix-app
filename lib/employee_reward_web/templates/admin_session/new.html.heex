@@ -1,0 +1,25 @@
+<h1>Log in as Admin</h1>
+
+<%= form_for @conn, Routes.admin_session_path(@conn, :create), [as: :session], fn f -> %>
+  <fieldset disabled>
+    <div class="mb-3">
+      <label for="disabledTextInput">Username</label>
+      <input type="text" id="disabledTextInput" class="form-control" placeholder="admin">
+    </div>
+  </fieldset>
+
+  <div class="mb-3">
+    <%= label f, :password %>
+    <%= password_input f, :password, class: "form-control", required: true %>
+    <%= error_tag f, :password %>
+  </div>
+
+  <div class="mb-3">
+    <%= submit "Log in", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<p>
+  <%= link "Register as employee", to: Routes.employee_registration_path(@conn, :new) %> |
+  <%= link "Log in as employee", to: Routes.employee_session_path(@conn, :new) %>
+</p>

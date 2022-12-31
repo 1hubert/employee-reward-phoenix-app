@@ -6,6 +6,22 @@ defmodule EmployeeRewardWeb.AdminController do
   alias EmployeeReward.Rewards.PointsHistory
   alias EmployeeReward.{Repo, Rewards}
 
+  plug :check_auth
+
+  defp check_auth(conn, _args) do
+    if get_session(conn, :admin_session) do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You need to be logged in as admin to access that page")
+      |> redirect(to: Routes.admin_session_path(conn, :new))
+    end
+  end
+
+  def index(conn, _params) do
+    text(conn, "Hello from admin index!!")
+  end
+
   def report(conn, %{"year" => year, "month" => month}) do
     {year, _} = Float.parse(year)
     {month, _} = Float.parse(month)
