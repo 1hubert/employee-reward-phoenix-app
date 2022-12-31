@@ -33,6 +33,12 @@ defmodule EmployeeRewardWeb.Router do
     # delete "/employees/:id", EmployeeController, :delete
   end
 
+  scope "/admin", EmployeeRewardWeb do
+    pipe_through [:browser]
+
+    get "/report", AdminController, :report
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", EmployeeRewardWeb do
   #   pipe_through :api
