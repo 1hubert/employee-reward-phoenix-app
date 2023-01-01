@@ -1,0 +1,12 @@
+<h2>New Award</h2>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.award_path(@conn, :create)) %>
+
+<span><%= link "Back", to: Routes.admin_path(@conn, :index) %></span>
+
+
+
+
+
+
+

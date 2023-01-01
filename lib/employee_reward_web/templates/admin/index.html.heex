@@ -1,7 +1,67 @@
-<h1>Monthly Report</h1>
-
+<h1>Show Monthly Report</h1>
+<%= form_for @conn, Routes.admin_path(@conn, :report), fn f -> %>
+    <div class="input-group" style="width: 400px;">
+        <%= select f, :year_month, @distinct_year_months, prompt: "Select year and month", class: "form-select" %>
+        <%= submit "Show report", class: "btn btn-outline-secondary" %>
+    </div>
+<% end %>
+<br><br>
 
 <h1>Manage Awards</h1>
-
+<%= link "Add a new award", to: Routes.award_path(@conn, :new), method: :get, class: "btn btn-primary" %>
+<table class="table table-hover">
+    <thead class="table-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Award Name</th>
+            <th scope="col">Award Description</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%= for award <- @awards do %>
+            <tr>
+                <th scope="row"><%= award.id %></th>
+                <td><%= award.award_name %></td>
+                <td><%= award.award_description %></td>
+                <td><%= award.point_cost %></td>
+                <td class="text-right">
+                    <%= link "Edit", to: Routes.award_path(@conn, :edit, award), class: "btn btn-primary btn-xs" %>
+                    <%= link "Delete", to: Routes.award_path(@conn, :delete, award), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+                  </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+<br>
 
 <h1>Edit employees reward pools</h1>
+<table class="table table-hover">
+    <thead class="table-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Email</th>
+            <th scope="col">Points to grant</th>
+            <th scope="col">Points obtained</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <%= for balance <- @points_balances do %>
+            <tr>
+                <th scope="row"><%= balance.employee_id %></th>
+                <td><%= balance.employee.name %></td>
+                <td><%= balance.employee.surname %></td>
+                <td><%= balance.employee.email %></td>
+                <td><%= balance.points_to_grant %></td>
+                <td><%= balance.points_obtained %></td>
+                <td class="text-right">
+                    <%= link "Edit points", to: Routes.points_balance_path(@conn, :edit, balance), class: "btn btn-primary btn-xs" %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

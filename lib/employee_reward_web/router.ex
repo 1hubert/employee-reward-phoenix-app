@@ -26,11 +26,6 @@ defmodule EmployeeRewardWeb.Router do
     post "/awards/claim/:award_id", AwardController, :claim
     post "/grant/:to_id", PointsBalanceController, :grant
     get "/history", PointsHistoryController, :index
-
-    # get "/edit/:id", EmployeeController, :edit
-    # patch "/employees/:id", EmployeeController, :update
-    # put "/employees/:id", EmployeeController, :update
-    # delete "/employees/:id", EmployeeController, :delete
   end
 
   scope "/admin", EmployeeRewardWeb do
@@ -41,6 +36,22 @@ defmodule EmployeeRewardWeb.Router do
     delete "/log_out", AdminSessionController, :delete
     get "/", AdminController, :index
     get "/report", AdminController, :report
+    post "/report", AdminController, :report
+
+    scope "/award" do
+      get "/edit/:id", AwardController, :edit
+      patch "/:id", AwardController, :update
+      put "/:id", AwardController, :update
+      delete "/:id", AwardController, :delete
+      get "/new", AwardController, :new
+      post "/", AwardController, :create
+    end
+
+    scope "/points" do
+      get "/edit/:id", PointsBalanceController, :edit
+      patch "/:id", PointsBalanceController, :update
+      put "/:id", PointsBalanceController, :update
+    end
   end
 
   # Other scopes may use custom stacks.

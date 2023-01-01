@@ -5,7 +5,7 @@ defmodule EmployeeRewardWeb.AdminAuth do
   alias EmployeeRewardWeb.Router.Helpers, as: Routes
 
   def redirect_if_admin_is_authenticated(conn, _opts) do
-    if conn.assigns[:admin_session] do
+    if get_session(conn, :admin_session) do
       conn
       |> redirect(to: Routes.admin_path(conn, :index))
       |> halt()

@@ -15,6 +15,7 @@ defmodule EmployeeRewardWeb.AdminSessionController do
     case password == "12345" do
       true ->
         conn
+        |> renew_session()
         |> put_session(:admin_session, true)
         |> put_flash(:info, "Logged in successfuly")
         |> redirect(to: Routes.admin_path(conn, :index))
@@ -28,7 +29,7 @@ defmodule EmployeeRewardWeb.AdminSessionController do
   def delete(conn, _params) do
     conn
     |> renew_session()
-    |> put_flash(:info, "Logged out successfuly")
+    |> put_flash(:info, "Logged out successfuly from Admin Dashboard")
     |> redirect(to: Routes.employee_session_path(conn, :create))
   end
 

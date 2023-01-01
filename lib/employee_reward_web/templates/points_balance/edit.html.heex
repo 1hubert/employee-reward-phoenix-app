@@ -1,0 +1,27 @@
+<h1>Edit points for employee ID <%= @points_balance.employee_id %></h1>
+
+<%= form_for @changeset, Routes.points_balance_path(@conn, :update, @points_balance), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :points_to_grant, class: "control-label" %>
+    <%= text_input f, :points_to_grant, class: "form-control" %>
+    <%= error_tag f, :points_to_grant %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :points_obtained, class: "control-label" %>
+    <%= text_input f, :points_obtained, class: "form-control" %>
+    <%= error_tag f, :points_obtained %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<span><%= link "Back", to: Routes.admin_path(@conn, :index) %></span>

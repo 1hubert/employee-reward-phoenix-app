@@ -11,29 +11,56 @@ defmodule EmployeeRewardWeb.AdminController do
 
   def index(conn, _params) do
     awards = Rewards.list_awards()
-    points_balances = Rewards.list_points_balances()
-
-    render(conn, "index.html", awards: awards, points_balances: points_balances)
-  end
-
-  def report(conn, %{"year" => year, "month" => month}) do
-    {year, _} = Float.parse(year)
-    {month, _} = Float.parse(month)
+    points_balances =
+      Rewards.list_points_balances()
+      |> Repo.preload(:employee)
 
     query = from p in PointsHistory,
       where: p.transaction_type == "Grant points",
-      select: %{
-        {fragment("date_part('year', ?)", p.inserted_at), fragment("date_part('month', ?)", p.inserted_at)} => %{email: p.receiver , total_points: sum(p.value)}
-      },
-      order_by: [fragment("date_part('year', ?)", p.inserted_at), fragment("date_part('month', ?)", p.inserted_at)],
-      group_by: [fragment("date_part('year', ?)", p.inserted_at), fragment("date_part('month', ?)", p.inserted_at), p.receiver]
+      select: fragment("distinct on (?) ?", fragment("date_trunc('month', ?)", p.inserted_at), fragment("date_trunc('month', ?)", p.inserted_at)),
+      order_by: fragment("date_trunc('month', ?)", p.inserted_at)
 
-    employee_points =
+    distinct_year_months =
       Repo.all(query)
-      |> group_values_by_year_month()
-      |> Map.get({year, month})
+      |> Enum.map(fn x -> {"#{x.year}-#{x.month}", "#{x.year}-#{x.month}"} end)
 
-    render(conn, "report.html", employee_points: employee_points, year: trunc(year), month: convert_month(month))
+
+    render(conn, "index.html", awards: awards, points_balances: points_balances, distinct_year_months: distinct_year_months)
+  end
+
+  def report(conn, %{"year_month" => year_month}) do
+    if year_month == "" do
+      conn
+      |> put_flash(:error, "Please select year and month")
+      |> redirect(to: Routes.admin_path(conn, :index))
+    else
+      <<year::bytes-size(4)>> <> "-" <> month = year_month
+
+      {year, _} = Float.parse(year)
+      {month, _} = Float.parse(month)
+
+      query = from p in PointsHistory,
+        where: p.transaction_type == "Grant points",
+        select: %{
+          {fragment("date_part('year', ?)", p.inserted_at), fragment("date_part('month', ?)", p.inserted_at)} => %{email: p.receiver , total_points: sum(p.value)}
+        },
+        order_by: [fragment("date_part('year', ?)", p.inserted_at), fragment("date_part('month', ?)", p.inserted_at)],
+        group_by: [fragment("date_part('year', ?)", p.inserted_at), fragment("date_part('month', ?)", p.inserted_at), p.receiver]
+
+      employee_points =
+        Repo.all(query)
+        |> group_values_by_year_month()
+        |> Map.get({year, month})
+
+      case employee_points == nil do
+        true ->
+          conn
+          |> put_flash(:error, "No records from #{trunc(year)} #{convert_month(month)}")
+          |> redirect(to: Routes.admin_path(conn, :index))
+        false ->
+          render(conn, "report.html", employee_points: employee_points, year: trunc(year), month: convert_month(month))
+      end
+    end
   end
 
 #   ----------

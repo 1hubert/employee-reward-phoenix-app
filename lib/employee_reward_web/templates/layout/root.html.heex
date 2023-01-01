@@ -11,24 +11,36 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #3fefe4;">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">Employee Reward App</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+    <%= if Plug.Conn.get_session(@conn, :admin_session) do %>
+      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #3fefe4;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/admin">Employee Reward App (Admin Dashboard)</a>
 
-        <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
-          <div class="navbar-nav ml-auto">
-            <a class="nav-link active" aria-current="page" href="/">Grant points</a>
-            <a class="nav-link" href="/awards">Redeem awards</a>
-            <a class="nav-link" href="/history">History</a>
+          <div class="d-flex">
+            <%= link "Admin Log out", to: Routes.admin_session_path(@conn, :delete), class: "btn btn-outline-primary", method: :delete %>
           </div>
         </div>
+      </nav>
+    <% else %>
+      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #3fefe4;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Employee Reward App</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <%= render "_employee_menu.html", assigns %>
-      </div>
-    </nav>
+          <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+              <a class="nav-link active" aria-current="page" href="/">Grant points</a>
+              <a class="nav-link" href="/awards">Redeem awards</a>
+              <a class="nav-link" href="/history">History</a>
+            </div>
+          </div>
+
+          <%= render "_employee_menu.html", assigns %>
+        </div>
+      </nav>
+    <% end %>
     <%= @inner_content %>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
