@@ -16,7 +16,7 @@ defmodule EmployeeRewardWeb.EmployeeRegistrationController do
         conn
         |> put_flash(:info, "Registered successfully!")
         |> EmployeeAuth.log_in_employee(employee)
-      {:error, _step, %Ecto.Changeset{} = changeset, _results} ->
+      {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
   end

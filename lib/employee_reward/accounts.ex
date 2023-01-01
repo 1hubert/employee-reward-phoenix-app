@@ -83,6 +83,12 @@ defmodule EmployeeReward.Accounts do
       Rewards.create_points_balance(%{employee_id: id})
     end)
     |> Repo.transaction()
+    |> case do
+      {:ok, result} ->
+        {:ok, result}
+      {:error, _failed_operation, failed_value, _changes_so_far} ->
+        {:error, failed_value}
+    end
   end
 
   @doc """
