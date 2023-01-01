@@ -13,7 +13,7 @@ defmodule EmployeeRewardWeb.EmployeeResetPasswordController do
     if employee = Accounts.get_employee_by_email(email) do
       Accounts.deliver_employee_reset_password_instructions(
         employee,
-        &Routes.employee_reset_password_url(conn, :edit, &1)
+        &Routes.employee_reset_password_path(conn, :edit, &1)
       )
     end
 

@@ -163,23 +163,6 @@ defmodule EmployeeReward.Accounts do
   end
 
   @doc """
-  Delivers the update email instructions to the given employee.
-
-  ## Examples
-
-      iex> deliver_update_email_instructions(employee, current_email, &Routes.employee_update_email_url(conn, :edit, &1))
-      {:ok, %{to: ..., body: ...}}
-
-  """
-  def deliver_update_email_instructions(%Employee{} = employee, current_email, update_email_url_fun)
-      when is_function(update_email_url_fun, 1) do
-    {encoded_token, employee_token} = EmployeeToken.build_email_token(employee, "change:#{current_email}")
-
-    Repo.insert!(employee_token)
-    EmployeeNotifier.deliver_update_email_instructions(employee, update_email_url_fun.(encoded_token))
-  end
-
-  @doc """
   Returns an `%Ecto.Changeset{}` for changing the employee password.
 
   ## Examples
@@ -245,31 +228,6 @@ defmodule EmployeeReward.Accounts do
   def delete_session_token(token) do
     Repo.delete_all(EmployeeToken.token_and_context_query(token, "session"))
     :ok
-  end
-
-  ## Confirmation
-
-  @doc """
-  Delivers the confirmation email instructions to the given employee.
-
-  ## Examples
-
-      iex> deliver_employee_confirmation_instructions(employee, &Routes.employee_confirmation_url(conn, :edit, &1))
-      {:ok, %{to: ..., body: ...}}
-
-      iex> deliver_employee_confirmation_instructions(confirmed_employee, &Routes.employee_confirmation_url(conn, :edit, &1))
-      {:error, :already_confirmed}
-
-  """
-  def deliver_employee_confirmation_instructions(%Employee{} = employee, confirmation_url_fun)
-      when is_function(confirmation_url_fun, 1) do
-    if employee.confirmed_at do
-      {:error, :already_confirmed}
-    else
-      {encoded_token, employee_token} = EmployeeToken.build_email_token(employee, "confirm")
-      Repo.insert!(employee_token)
-      EmployeeNotifier.deliver_confirmation_instructions(employee, confirmation_url_fun.(encoded_token))
-    end
   end
 
   @doc """

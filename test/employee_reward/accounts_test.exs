@@ -362,59 +362,6 @@ defmodule EmployeeReward.AccountsTest do
     end
   end
 
-  describe "deliver_employee_confirmation_instructions/2" do
-    setup do
-      %{employee: employee_fixture()}
-    end
-
-    test "sends token through notification", %{employee: employee} do
-      token =
-        extract_employee_token(fn url ->
-          Accounts.deliver_employee_confirmation_instructions(employee, url)
-        end)
-
-      {:ok, token} = Base.url_decode64(token, padding: false)
-      assert employee_token = Repo.get_by(EmployeeToken, token: :crypto.hash(:sha256, token))
-      assert employee_token.employee_id == employee.id
-      assert employee_token.sent_to == employee.email
-      assert employee_token.context == "confirm"
-    end
-  end
-
-  describe "confirm_employee/1" do
-    setup do
-      employee = employee_fixture()
-
-      token =
-        extract_employee_token(fn url ->
-          Accounts.deliver_employee_confirmation_instructions(employee, url)
-        end)
-
-      %{employee: employee, token: token}
-    end
-
-    test "confirms the email with a valid token", %{employee: employee, token: token} do
-      assert {:ok, confirmed_employee} = Accounts.confirm_employee(token)
-      assert confirmed_employee.confirmed_at
-      assert confirmed_employee.confirmed_at != employee.confirmed_at
-      assert Repo.get!(Employee, employee.id).confirmed_at
-      refute Repo.get_by(EmployeeToken, employee_id: employee.id)
-    end
-
-    test "does not confirm with invalid token", %{employee: employee} do
-      assert Accounts.confirm_employee("oops") == :error
-      refute Repo.get!(Employee, employee.id).confirmed_at
-      assert Repo.get_by(EmployeeToken, employee_id: employee.id)
-    end
-
-    test "does not confirm email if token expired", %{employee: employee, token: token} do
-      {1, nil} = Repo.update_all(EmployeeToken, set: [inserted_at: ~N[2020-01-01 00:00:00]])
-      assert Accounts.confirm_employee(token) == :error
-      refute Repo.get!(Employee, employee.id).confirmed_at
-      assert Repo.get_by(EmployeeToken, employee_id: employee.id)
-    end
-  end
-
   describe "deliver_employee_reset_password_instructions/2" do
     setup do
       %{employee: employee_fixture()}
