@@ -13,16 +13,9 @@ defmodule EmployeeRewardWeb.EmployeeRegistrationController do
   def create(conn, %{"employee" => employee_params}) do
     case Accounts.register_employee(employee_params) do
       {:ok, %{employee: employee}} ->
-        {:ok, _} =
-          Accounts.deliver_employee_confirmation_instructions(
-            employee,
-            &Routes.employee_confirmation_url(conn, :edit, &1)
-          )
-
         conn
         |> put_flash(:info, "Registered successfully!")
         |> EmployeeAuth.log_in_employee(employee)
-
       {:error, _step, %Ecto.Changeset{} = changeset, _results} ->
         render(conn, "new.html", changeset: changeset)
     end

@@ -104,20 +104,8 @@ defmodule EmployeeRewardWeb.Router do
   end
 
   scope "/", EmployeeRewardWeb do
-    pipe_through [:browser, :require_authenticated_employee]
-
-    get "/employees/settings", EmployeeSettingsController, :edit
-    put "/employees/settings", EmployeeSettingsController, :update
-    get "/employees/settings/confirm_email/:token", EmployeeSettingsController, :confirm_email
-  end
-
-  scope "/", EmployeeRewardWeb do
     pipe_through [:browser]
 
     delete "/employees/log_out", EmployeeSessionController, :delete
-    get "/employees/confirm", EmployeeConfirmationController, :new
-    post "/employees/confirm", EmployeeConfirmationController, :create
-    get "/employees/confirm/:token", EmployeeConfirmationController, :edit
-    post "/employees/confirm/:token", EmployeeConfirmationController, :update
   end
 end
