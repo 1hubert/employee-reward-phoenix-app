@@ -24,7 +24,8 @@ config :logger, level: :info
 config :employee_reward, EmployeeRewardWeb.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [scheme: "https", host: "arcane-temple-41768.herokuapp.com"],
-  force_ssl: [rewrite_on: [:x_forwarded_proto]]
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
+  server: true
 
 
 # config :employee_reward, EmployeeRewardWeb.Endpoint,
