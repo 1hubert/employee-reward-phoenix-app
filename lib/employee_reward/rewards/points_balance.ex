@@ -17,7 +17,7 @@ defmodule EmployeeReward.Rewards.PointsBalance do
     points_balance
     |> cast(attrs, [:points_to_grant, :points_obtained, :employee_id])
     |> validate_required([:points_to_grant, :points_obtained, :employee_id])
-    |> validate_number(:points_to_grant, greater_than_or_equal_to: 0, less_than_or_equal_to: 50)
+    |> validate_number(:points_to_grant, greater_than_or_equal_to: 0)
     |> validate_number(:points_obtained, greater_than_or_equal_to: 0)
   end
 end
