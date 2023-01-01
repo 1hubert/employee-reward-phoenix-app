@@ -1,0 +1,12 @@
+{
+    "scripts": {
+      "deploy": "cd .. && mix assets.deploy && rm -f _build/esbuild*"
+    },
+    "dependencies": {
+      "autosize": "^5.0.1",
+      "codemirror": "^5.65.9",
+      "codemirror-mode-elixir": "^1.1.1",
+      "jquery": "^3.6.1",
+      "jquery.cookie": "^1.4.1"
+    }
+  }
