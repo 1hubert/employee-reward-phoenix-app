@@ -26,10 +26,4 @@ defmodule EmployeeRewardWeb.EmployeeController do
 
     render(conn, "index.html", employees: employees, employee_info: employee_info)
   end
-
-  def show(conn, params, _current_employee) do
-    %{"id" => id} = params
-    employee = Repo.get!(Employee, id)
-    render(conn, "show.html", employee: employee)
-  end
 end
