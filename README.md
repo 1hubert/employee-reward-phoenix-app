@@ -8,8 +8,6 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
 ## Learn more
 
   * Official website: https://www.phoenixframework.org/
@@ -17,3 +15,9 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+## Important routes
+
+- `/employee/log_in` - Log in as employee
+- `/admin/log_in` - Log in as admin (password is 12345)
+- `/dev/mailbox` - Mailbox
