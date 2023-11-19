@@ -2,7 +2,7 @@
 
 ## Screenshots
 
-![logo](https://github.com/1hubert/employee-reward-phoenix-app/raw/master/readme_images/admin_dashboard.png)
+![logo](https://github.com/1hubert/employee-reward-phoenix-app/raw/main/readme_images/admin_dashboard.png)
 
 ## How to start your Phoenix server
 
