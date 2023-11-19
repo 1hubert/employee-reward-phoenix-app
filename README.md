@@ -1,6 +1,10 @@
 # EmployeeReward
 
-To start your Phoenix server:
+## Screenshots
+
+![logo](https://github.com/1hubert/employee-reward-phoenix-app/raw/master/readme_images/admin_dashboard.png)
+
+## How to start your Phoenix server
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
